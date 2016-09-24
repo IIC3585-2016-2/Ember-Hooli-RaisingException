@@ -24,13 +24,189 @@ class: center, middle, inverse
 # Outline
 
 1. Introducción
-2.
+2. Software Stack
+3. Conceptos Básicos
+4. Futuro
 
 ---
 class: center, middle, inverse
 
 # Introducción
 
+---
+# ¿Ember?
+
+* Web framework en JavaScript
+* Model-view-viewmodel (MVVM)
+* Single-page apps
+
+---
+# Filosofía y Diseño
+
+* Convention over Configuration (CoC)
+* Don't Repeat Yourself (DRY)
+
+Es a veces descrito como "highly opinionated" pero construido para ser muy flexible.
+
+---
+class: center, middle, inverse
+
+# Software Stack
+
+---
+# Software Stack
+
+### Ember-CLI
+
+Herramientas para la terminal.
+
+### Ember-Data
+
+Librería de persistencia de datos.
+Mapea modelos en el cliente a datos en el servidor.
+
+### Ember-Inspector
+
+Extensiones para Firefox/Chrome para debugueo.
+
+---
+# Software Stack
+
+### Fastboot
+
+Permite montar aplicaciones hechas en Ember sobre Node.js
+
+### Liquid Fire
+
+Provee soporte de animaciones:
+  * Transiciones animadas entre diferentes rutas/modelos.
+
+---
+class: center, middle, inverse
+
+# Conceptos Básicos
+
+---
+# Routes
+
+---
+# Models
+
+---
+# Templates
+
+Los templates definen **cómo se ve** la interfaz de usuario. Ember utiliza la librería **Handlebars**.
+
+* Contienen HTML estático
+
+* Permiten contenido dinámico dentro de expresiones {{}}
+
+* Data-Binding: al cambiar el valor de una expresión, se actualiza su representación visual automáticamente
+
+* Tienen un **contexto**, de donde las expresiones leen sus propiedades:
+	* Usualmente es otro componente
+	* Para templates rendereados por rutas (`application.hbs`), es el controlador
+
+---
+# Templates: Ejemplos
+
+## Template rendereado por ruta
+
+El controlador de la aplicación: app/controllers/application.js
+
+```javascript
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  firstName: 'Jaime',
+  lastName: 'Castro'
+});
+```
+
+Template de la aplicación: app/templates/application.hbs
+```hbs
+Hello, <strong>{{firstName}} {{lastName}}</strong>!
+```
+
+
+---
+# Templates
+
+---
+# Templates: Helpers
+
+Los Helpers permiten añadir un poco de lógica. 
+
+Ember viene con algunos helpers, pero también permite crearlos:
+
+```javascript
+export function sum(params) {
+	return params.reduce((a, b) => a + b);
+};
+export default Ember.Helper.helper(sum);
+```
+
+Luego lo usamos en un template:
+
+```hbs
+<p>Total: {{sum 1 2 3}}</p>
+```
+---
+# Componentes
+
+Controlan el **comportamiento** de la interfaz de usuario.
+
+Están formados por:
+* Un template
+* Código JavaScript que define su comportamiento
+
+---
+# Componentes
+
+```bash
+> ember generate component blog-post
+```
+
+Luego definimos su template:
+```hbs
+<article class="blog-post">
+  <h1>{{title}}</h1>
+  <p>{{yield}}</p>
+  <p>Edit title: {{input type="text" value=title}}</p>
+</article>
+```
+
+---
+# Componentes
+
+Ahora podemos usarlo!
+```hbs
+{{#each model as |post|}}
+  {{#blog-post title=post.title}}
+    {{post.body}}
+  {{/blog-post}}
+{{/each}}
+```
+
+---
+# Componentes
+
+Holi
+---
+
+# Services
+
+---
+class: center, middle, inverse
+
+# Futuro
+
+---
+OJO: Creo que tenemos q investigar esto, no cacho si lo q aparece en wikipediaestá al día (parece q algunas cosas ya están integradas)
+
+* Componentes Ruteables: Eliminar controladores.
+* Unificación de Componentes:
+* Engines: Permiten componer una aplicación a partir de múltiples otras.
 ---
 class: center, middle, inverse
 
