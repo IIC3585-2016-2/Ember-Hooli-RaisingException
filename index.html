@@ -87,8 +87,69 @@ class: center, middle, inverse
 # Conceptos Básicos
 
 ---
-# Routes
+# Rutas
 
+```bash
+ember generate route about
+ember generate route favorites
+```
+
+Estos comandos crean un archivo para cada ruta, un template, un archivo de tests unitarios. 
+Luego en `app/router.js`
+
+```bash
+Router.map(() => {
+  this.route('about');
+  this.route('favorites', { path: '/favs' });
+});
+```
+
+---
+# Rutas
+
+Podemos anidar rutas fácilmente con un callback:
+
+```javascript
+Router.map(() => {
+  this.route('about', () => {
+    this.route('faq');
+  });
+});
+```
+
+O podemos generarla con un comando:
+
+'''bash
+ember generate route about/faqs
+'''
+
+---
+# Rutas
+
+Para rutas con parámetros:
+
+```javascript
+Router.map(() => {
+  this.route('about', () => {
+    this.route('faq', { path: '/faq/:faq_id'});
+  });
+});
+```
+
+Es importante notar que se debe usar el formato `modelo_id`, para que la ruta pueda cargar el modelo correcto.
+
+---
+# Rutas
+
+También podemos crear una ruta que haga *match* con varios URLs.
+
+Un uso común es cuando no existe la página que se intenta acceder:
+
+'''javascript
+Router.map(() => {
+  this.route('404', { path: '/*wildcard' });
+});
+'''
 ---
 # Models
 
@@ -193,9 +254,64 @@ Ahora podemos usarlo!
 
 Holi
 ---
+# Servicios
 
-# Services
+* Singletons que viven durante todo el ciclo de vida de la app.
 
+* Utilizados en features que comparten estado o conexiones persistentes.
+
+* Geolocation, sesiones, WebSockets, Logging...
+
+---
+# Servicios
+
+```bash
+ember generate service shopping-cart
+```
+
+Deben extender la clase `Ember.Service`
+
+```javascript
+export default Ember.Service.extend({
+  items: null,
+  init() {
+    this._super(...arguments);
+    this.set('items', []);
+  },
+  add(item) {
+    this.get('items').pushObject(item);
+  },
+});
+```
+
+---
+# Servicios
+
+Debemos "inyectar" el servicio en un componente/otro servicio:
+
+```javascript
+export default Ember.Component.extend({
+  shoppingCart: Ember.inject.service()
+});
+```
+
+Las propiedades inyectadas son cargadas de forma **lazy**, por lo que se acceden con la función `get`.
+
+---
+# Servicios
+
+Podemos acceder al servicio dentro del template del componente:
+
+```hbs
+<ul>
+  {{#each cart.items as |item|}}
+    <li>
+      {{item.name}}
+      <button {{action "remove" item}}>Remove</button>
+    </li>
+  {{/each}}
+</ul>
+```
 ---
 class: center, middle, inverse
 
