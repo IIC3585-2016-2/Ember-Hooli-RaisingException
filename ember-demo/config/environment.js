@@ -1,6 +1,7 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
+
   var ENV = {
     modulePrefix: 'ember-demo',
     environment: environment,
@@ -11,6 +12,9 @@ module.exports = function(environment) {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
       }
+    },
+    contentSecurityPolicy: {
+     'connect-src' : "'self' http://localhost:4500"
     },
 
     APP: {
