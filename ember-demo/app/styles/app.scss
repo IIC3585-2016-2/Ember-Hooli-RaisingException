@@ -1,1 +1,15 @@
 @import "bootstrap";
+
+.panel {
+  display: table-cell;
+  width: 22em;
+  margin: 1em;
+  height: 20em;
+  float: left;
+}
+.panel-footer {
+  height: auto;
+}
+.jumbotron {
+  height: 100%;
+}
