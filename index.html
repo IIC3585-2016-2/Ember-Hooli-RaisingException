@@ -36,9 +36,35 @@ class: center, middle, inverse
 ---
 # ¿Ember?
 
+.left-column[
 * Web framework en JavaScript
 * Model-view-viewmodel (MVVM)
 * Single-page apps
+]
+--
+
+.small.right-column[
+```shell
+
+├── assets
+│ ├── project-name.css
+│ ├── project-name.js
+│ ├── vendor.js
+│ ├── vendor.css
+│ ├── ...
+├── crossdomain.xml
+├── fonts
+│ └── bootstrap
+|     ├── ...
+├── index.html
+├── robots.txt
+├── ...
+```
+.center[
+Output final
+]
+]
+
 
 ---
 # Filosofía y Diseño
@@ -63,16 +89,34 @@ Router.map(function() {
 });
 ```
 --
+## .center[&darr;]
+
+```javascript
+Router.map(function() {
+  this.route('users')
+  this.route('items')
+});
+```
+
+
+---
+
+# Filosofía y Diseño: CoC, DRY
 
 .center[
 
-### Setup inicial
+## Setup inicial
 
 &nbsp;
 
 |Rails|Ember|
 |---|---|
 |247 líneas|69 líneas|
+
+&nbsp;
+
+Misma filosofía, propósitos distintos
+
 ]
 
 ---
@@ -133,9 +177,40 @@ Progressive enhancement!
 * Al entrar al sitio, se carga el HTML inicial.
 * Después de descargar el contenido, se descarga el JavaScript.
 
-Suena bien, pero hay que hacer trabajo extra.
+.center[**Principal caso de uso: Ser indexado por los motores de búsqueda**]
+
+.red.center[Suena bien, pero hay que hacer trabajo extra]
 
 ---
+class: center, middle, inverse
+
+# Getting started
+
+---
+# Getting started
+
+## Prerrequisitos
+
+- Node.js
+- npm
+- git
+
+## Comandos
+
+```shell
+npm install -g ember-cli
+```
+
+```shell
+ember new my-project
+```
+
+```shell
+ember build
+```
+
+---
+
 class: center, middle, inverse
 
 # Conceptos Básicos
