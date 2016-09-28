@@ -145,13 +145,98 @@ También podemos crear una ruta que haga *match* con varios URLs.
 
 Un uso común es cuando no existe la página que se intenta acceder:
 
-'''javascript
+```javascript
 Router.map(() => {
   this.route('404', { path: '/*wildcard' });
 });
-'''
+```
 ---
 # Models
+
+* Los modelos son objetos que **representan** los datos que queremos mostrar.
+
+* Los modelos **no contienen datos**.
+
+* Usualmente representan datos *persistentes* (se cargan y guardan al cambiarlos).
+
+* Una vez cargados los datos, los componentes se encargan de *traducirlos* a la interfaz de usuario.
+
+* Ember Data facilita el cargar y guardar los modelos.
+
+---
+# Models
+
+Tomemos como ejemplo un modelo *blogPost*:
+
+```javascript
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  author: DS.attr('string'),
+  date:  DS.attr('date'),
+  categories: DS.hasMany('category')
+});
+```
+
+---
+# Models
+
+Como dijimos antes, los modelos **no contienen datos**.
+
+Las instancias de los modelos, llamadas **records**, son las que contienen los datos que cargamos del servidor.
+
+Los **records** son identificados por el **tipo** de su modelo y un **ID** único.
+
+```javascript
+this.get('store').findRecord('blogPost', 1);
+```
+
+Esto nos devuelve el record `{ id: 1, author: 'Tomster', ...}`.
+
+---
+# Models
+
+Probablemente tendremos una API con la que pedimos los records.
+
+Para que Ember sepa cómo hacer el request, usamos **adapters**.
+
+Cuando nuestra app pide un record que no tiene en **caché**, usará el adapter para que realice el request a nuestra API. Lo mismo si queremos guardarlo en la base de datos.
+
+Podemos crear adapters propios, pero no es necesario si nuestra API calza con los *defaults* de Ember Data:
+  * RESTAdapter
+  * JSONAPIAdapter (default)
+
+---
+# Models
+
+```javascript
+store.findRecord('blogPost', 1).then((post) => {});
+```
+
+Al hacer esto, el JSONAPIAdapter hace un `GET` a `/blogPosts/1`.
+
+Pero si queremos crear uno propio (`app/adapters/blogPost.js`):
+
+```javascript
+export default DS.JSONAPIAdapter.extend({
+  namespace: 'api/v1'
+});
+```
+
+Hay **muuuuuchas** más configuraciones que podemos usar, por ejemplo, para configurar los headers o el host.
+
+---
+# Models
+
+## Caching
+
+Ember automáticamente guarda los records que pedimos en el caché.
+
+Si pedimos un record en una parte de nuestra app y lo modificamos, cuando lo pidamos en otro lugar obtendremos el record modificado.
+
+¿Y si el record cambia en el servidor pero nosotros lo tenemos en caché?
+
+Ember Data automáticamente hace un request en el background, y si hay cambios el record se actualiza (y se vuelve a renderear).
 
 ---
 # Templates
