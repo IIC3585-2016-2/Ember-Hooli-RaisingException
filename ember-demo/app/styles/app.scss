@@ -6,10 +6,28 @@
   margin: 1em;
   height: 20em;
   float: left;
+  position:relative;
+  overflow:hidden
 }
 .panel-footer {
+  bottom: 0;
+  position:absolute;
+  width:100%;
   height: auto;
+  min-height: 59px
+}
+.panel-body img{
+  width: 100%;
+  height: 100%;
+}
+.panel-image{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 .jumbotron {
   height: 100%;
+}
+.clear {
+  clear: both;
 }

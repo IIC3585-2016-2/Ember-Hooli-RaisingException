@@ -73,6 +73,11 @@ app.get('/api/articles',function(req,res){
 			res.send(err);
 		}
 		else {
+      docs.sort(function(a,b){
+        a = new Date(a.publishedAt);
+        b = new Date(b.publishedAt);
+        return a>b ? -1 : a<b ? 1 : 0;
+      });
 			res.send(docs);
 		}
 	});
