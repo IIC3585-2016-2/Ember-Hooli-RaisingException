@@ -43,10 +43,37 @@ class: center, middle, inverse
 ---
 # Filosofía y Diseño
 
-* Convention over Configuration (CoC)
-* Don't Repeat Yourself (DRY)
+* Convention over Configuration .red[(CoC)]
+* Don't Repeat Yourself .red[(DRY)]
 
 Es a veces descrito como "highly opinionated" pero construido para ser muy flexible.
+
+.center[**¿Qué es lo que relmente le da este carácter?**]
+
+---
+
+# Filosofía y Diseño: CoC, DRY
+
+1. Archivos generados donde más conviene
+2. Librería a la que se le indica "lo que existe" y busca donde se espera que estén las cosas
+
+```javascript
+Router.map(function() {
+  this.route('users')
+});
+```
+--
+
+.center[
+
+### Setup inicial
+
+&nbsp;
+
+|Rails|Ember|
+|---|---|
+|247 líneas|69 líneas|
+]
 
 ---
 class: center, middle, inverse
@@ -526,7 +553,7 @@ drag,
 dragEnter,
 dragLeave,
 dragOver,
-dragEnd, y 
+dragEnd, y
 drop
 ---
 class: center, middle, inverse
