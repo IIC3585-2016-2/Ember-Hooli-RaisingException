@@ -435,8 +435,10 @@ class: center, middle, inverse
 Controlan el **comportamiento** de la interfaz de usuario.
 
 Están formados por:
-* Un template
-* Código JavaScript que define su comportamiento
+* Un template.
+* Código JavaScript que define su comportamiento (opcional).
+
+Deben contener al menos un guión (-) en su nombre.
 
 ---
 # Componentes
@@ -445,7 +447,7 @@ Están formados por:
 > ember generate component blog-post
 ```
 
-Luego definimos su template:
+Luego definimos su template en app/components/blog-post.hbs :
 ```hbs
 <article class="blog-post">
   <h1>{{title}}</h1>
@@ -465,11 +467,67 @@ Ahora podemos usarlo!
   {{/blog-post}}
 {{/each}}
 ```
-
+Pueden funcionar como blocks también!
 ---
 # Componentes
+Se les puede agregar más lógica con javascrit! En app/components/blog-post.js
+```javascript
+import Ember from 'ember';
 
-Holi
+export default Ember.Component.extend({
+  tagName: 'nav',
+  classNames: ['primary'],
+  classNameBindings: ['isUrgent:urgent:not-urgent', 'priority']
+});
+```
+
+```html
+<nav class="primary urgent high"> //isUrgent = true, priority = 'high'
+
+<nav class="primary not-urgent low"> //isUrgent = false, priority = 'low'
+```
+---
+# Componentes: eventos!
+Permite también el manejo de eventos para estos componentes:
+```javascript
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  doubleClick() {
+    alert("DoubleClickableComponent was clicked!");
+  }
+});
+```
+Soporta:
+touchStart,
+touchMove,
+touchEnd,
+touchCancel,
+keyDown,
+keyUp,
+keyPress,
+mouseDown,
+mouseUp,
+contextMenu,
+click,
+doubleClick,
+mouseMove,
+focusIn,
+focusOut,
+mouseEnter,
+mouseLeave,
+submit,
+change,
+focusIn,
+focusOut,
+input,
+dragStart,
+drag,
+dragEnter,
+dragLeave,
+dragOver,
+dragEnd, y 
+drop
 ---
 class: center, middle, inverse
 
