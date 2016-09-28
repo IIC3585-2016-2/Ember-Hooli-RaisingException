@@ -60,26 +60,53 @@ class: center, middle, inverse
 
 Herramientas para la terminal.
 
-### Ember-Data
+Se acuerdan de Rails?
 
-Librería de persistencia de datos.
-Mapea modelos en el cliente a datos en el servidor.
+```bash
+> ember new my-app
+> ember generate route my-route
+> ember init
+> ember build
+> ember server
+...
+```
+
+---
+# Software Stack
+
+### Ember Data
+
+* Librería de persistencia de datos.
+
+* Mapea modelos en el cliente a datos en el servidor.
+
+* Permite sincronizar de manera transparente los datos con el servidor.
+
+---
+# Software Stack
 
 ### Ember-Inspector
 
 Extensiones para Firefox/Chrome para debugueo.
+
+### Liquid Fire
+
+Provee soporte de animaciones:
+  * entre rutas
+  * entre modelos
 
 ---
 # Software Stack
 
 ### Fastboot
 
-Permite montar aplicaciones hechas en Ember sobre Node.js
+Progressive enhancement!
 
-### Liquid Fire
+* Node.js
+* Al entrar al sitio, se carga el HTML inicial.
+* Después de descargar el contenido, se descarga el JavaScript.
 
-Provee soporte de animaciones:
-  * Transiciones animadas entre diferentes rutas/modelos.
+Suena bien, pero hay que hacer trabajo extra.
 
 ---
 class: center, middle, inverse
@@ -87,17 +114,24 @@ class: center, middle, inverse
 # Conceptos Básicos
 
 ---
+class: center, middle, inverse
+
+# Conceptos Básicos
+
+# Rutas
+
+---
 # Rutas
 
 ```bash
-ember generate route about
-ember generate route favorites
+> ember generate route about
+> ember generate route favorites
 ```
 
 Estos comandos crean un archivo para cada ruta, un template, un archivo de tests unitarios. 
 Luego en `app/router.js`
 
-```bash
+```javascript
 Router.map(() => {
   this.route('about');
   this.route('favorites', { path: '/favs' });
@@ -119,9 +153,9 @@ Router.map(() => {
 
 O podemos generarla con un comando:
 
-'''bash
-ember generate route about/faqs
-'''
+```bash
+> ember generate route about/faqs
+```
 
 ---
 # Rutas
@@ -150,6 +184,12 @@ Router.map(() => {
   this.route('404', { path: '/*wildcard' });
 });
 ```
+---
+class: center, middle, inverse
+
+# Conceptos Básicos
+
+# Models
 ---
 # Models
 
@@ -230,14 +270,20 @@ Hay **muuuuuchas** más configuraciones que podemos usar, por ejemplo, para conf
 
 ## Caching
 
-Ember automáticamente guarda los records que pedimos en el caché.
+Ember automáticamente guarda los records que pedimos en el **caché**.
 
 Si pedimos un record en una parte de nuestra app y lo modificamos, cuando lo pidamos en otro lugar obtendremos el record modificado.
 
-¿Y si el record cambia en el servidor pero nosotros lo tenemos en caché?
+####¿Y si el record cambia en el servidor pero nosotros lo tenemos en caché?
 
-Ember Data automáticamente hace un request en el background, y si hay cambios el record se actualiza (y se vuelve a renderear).
+Ember Data automáticamente hace un request en el **background**, y si hay cambios el record se actualiza (y se vuelve a renderear).
 
+---
+class: center, middle, inverse
+
+# Conceptos Básicos
+
+# Templates
 ---
 # Templates
 
@@ -298,6 +344,12 @@ Luego lo usamos en un template:
 <p>Total: {{sum 1 2 3}}</p>
 ```
 ---
+class: center, middle, inverse
+
+# Conceptos Básicos
+
+# Componentes
+---
 # Componentes
 
 Controlan el **comportamiento** de la interfaz de usuario.
@@ -339,6 +391,12 @@ Ahora podemos usarlo!
 
 Holi
 ---
+class: center, middle, inverse
+
+# Conceptos Básicos
+
+# Servicios
+---
 # Servicios
 
 * Singletons que viven durante todo el ciclo de vida de la app.
@@ -351,7 +409,7 @@ Holi
 # Servicios
 
 ```bash
-ember generate service shopping-cart
+> ember generate service shopping-cart
 ```
 
 Deben extender la clase `Ember.Service`
