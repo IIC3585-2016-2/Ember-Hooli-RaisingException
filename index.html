@@ -128,7 +128,7 @@ class: center, middle, inverse
 > ember generate route favorites
 ```
 
-Estos comandos crean un archivo para cada ruta, un template, un archivo de tests unitarios. 
+Estos comandos crean un archivo para cada ruta, un template, un archivo de tests unitarios.
 Luego en `app/router.js`
 
 ```javascript
@@ -291,9 +291,10 @@ Los templates definen **cómo se ve** la interfaz de usuario. Ember utiliza la l
 
 * Contienen HTML estático
 
-* Permiten contenido dinámico dentro de expresiones {{}}
+* Permiten contenido dinámico dentro de expresiones {{}} para escape de valores.
+  * Para no escapar valores, se puede usar {{{}}}.
 
-* Data-Binding: al cambiar el valor de una expresión, se actualiza su representación visual automáticamente
+* Data-Binding: al cambiar el valor de una expresión, se actualiza su representación visual automáticamente.
 
 * Tienen un **contexto**, de donde las expresiones leen sus propiedades:
 	* Usualmente es otro componente
@@ -322,15 +323,78 @@ Hello, <strong>{{firstName}} {{lastName}}</strong>!
 
 
 ---
-# Templates
+# Templates: Blocks
 
+Permiten agregar iteración y otras funcionalidades entregando bloques con nuevo contexto.
+
+```hbs
+{{#nombre-block parametros}}
+  ...
+{{/nombre-block}}
+```
 ---
+# Blocks: **with**
+Define que parte del contexto utilizar en cierta sección. Permite definir distintos
+contextos de entrada.
+```javascript
+{
+  curso: 'Web Avanzada',
+  prof: { nombre: 'Jaime', apellido: 'Navón'},
+  ayudante:{ nombre: 'Patricio', apellido: 'López'}
+}
+```
+```hbs
+{{#with prof}}
+  Hello, <strong>{{nombre}} {{apellido}}</strong>!
+{{/with}}
+{{#with ayudante}}
+  Hello, <strong>{{nombre}} {{apellido}}</strong>!
+{{/with}}
+```
+---
+# Blocks: **each**
+Iterador básico, equivalente a forEach de javascript. Permite renombre de argumento.
+```javascript
+{
+  curso: 'Web Avanzada',
+  alumnos: [
+    { nombre: 'Jaime', apellido: 'Castro'},
+    {nombre: 'Matias', apellido: 'Junemann'}
+    ]
+}
+```
+```hbs
+{{#each alumnos}}
+  Hello, <strong>{{nombre}} {{apellido}}</strong>!
+{{/each}}
+```
+---
+# Blocks: **Condicionales**
+Permite bloques condicionales de respuestas de servidor utilizando variables
+de contexto. También existe else y elif.
+```javascript
+{
+  curso: 'Web Avanzada',
+  vinoElAyudanteHoy: false,
+  ayudante:{ nombre: 'Patricio', apellido: 'López'}
+}
+```
+```hbs
+{{#if vinoElAyudanteHoy}}
+  {{#with ayudante}}
+    Hello, <strong>{{nombre}} {{apellido}}</strong>!
+  {{/with}}
+{{/if}}
+```
+---
+
 # Templates: Helpers
 
-Los Helpers permiten añadir un poco de lógica.
+Los Helpers permiten añadir lógica.
 
 Ember viene con algunos helpers, pero también permite crearlos:
 
+Si creamos en app/helpers/sum.js
 ```javascript
 export function sum(params) {
 	return params.reduce((a, b) => a + b);
@@ -343,6 +407,22 @@ Luego lo usamos en un template:
 ```hbs
 <p>Total: {{sum 1 2 3}}</p>
 ```
+---
+# Templates: Blocks son también Helpers!
+```javascript
+Handlebars.registerHelper('each', function(context, options) {
+  var ret = "";
+
+  for(var i=0, j=context.length; i<j; i++) {
+    ret = ret + options.fn(context[i]);
+  }
+
+  return ret;
+});
+```
+De modo que se pueden construir bloques más complejos que permiten crear
+estructuras complicadas iteradoras!
+
 ---
 class: center, middle, inverse
 
