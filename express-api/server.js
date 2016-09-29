@@ -68,7 +68,7 @@ app.get('/api/sources', (req,res) => {
 });
 
 app.get('/api/articles', (req,res) => {
-  ArticleModel.find({}, (err,docs) => {
+  ArticleModel.find({}).exec().then((err,docs) => {
     if(err) {
       res.send(err);
     } else {
@@ -84,7 +84,7 @@ app.get('/api/articles', (req,res) => {
 
 
 app.get('/api/notes', (req,res) => {
-  NoteModel.find({}, (err,docs) => {
+  NoteModel.find({}).exec().then((err,docs) => {
     if(err) res.send(err);
     else res.send(docs);
   });
